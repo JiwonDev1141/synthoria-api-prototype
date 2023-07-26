@@ -10,6 +10,9 @@ import { Member } from '../entity/member.entity';
 import { Token } from '../entity/token.entity';
 import { AuthModule } from './auth.module';
 import { Room } from '../entity/room.entity';
+import { SubTask } from '../entity/sub-task.entity';
+import { Task } from '../entity/task.entity';
+import { SubTaskComment } from '../entity/task-comment.entity';
 
 @Module({
   imports: [
@@ -37,7 +40,7 @@ import { Room } from '../entity/room.entity';
       password: 'user',
       database: 'workroom',
       logging: false,
-      entities: [Member, Token, Room],
+      entities: [Member, Token, Room, SubTask, Task, SubTaskComment],
       synchronize: false,
     }),
     AuthModule,

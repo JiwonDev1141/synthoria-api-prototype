@@ -10,7 +10,6 @@ import {
 import { Task } from './task.entity';
 
 @Entity('room')
-@Unique(['room_uuid'])
 export class Room {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,6 +21,7 @@ export class Room {
     name: 'room_uuid',
     type: 'varchar',
     length: 255,
+    unique: true,
   })
   roomUuid: string;
 
