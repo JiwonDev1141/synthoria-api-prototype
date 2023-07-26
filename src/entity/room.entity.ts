@@ -1,0 +1,83 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Task } from './task.entity';
+
+@Entity('room')
+@Unique(['room_uuid'])
+export class Room {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @OneToMany(() => Task, (task) => task.room)
+  tasks: Task[];
+
+  @Column({
+    name: 'room_uuid',
+    type: 'varchar',
+    length: 255,
+  })
+  roomUuid: string;
+
+  @Column({
+    name: 'room_name',
+    type: 'varchar',
+    length: 255,
+  })
+  roomName: string;
+
+  @Column({
+    name: 'room_color',
+    type: 'varchar',
+    length: 255,
+  })
+  roomColor: string;
+
+  @Column({
+    name: 'start_date',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  startDate: Date;
+
+  @Column({
+    name: 'end_date',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  endDate: Date;
+
+  @Column({
+    name: 'created_by',
+    type: 'integer',
+    nullable: true,
+  })
+  createdBy: number;
+
+  @Column({
+    name: 'updated_by',
+    type: 'integer',
+    nullable: true,
+  })
+  updatedBy: number;
+
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP()',
+  })
+  created_at: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP()',
+  })
+  updated_at: Date;
+}
