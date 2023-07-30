@@ -57,6 +57,7 @@ export class RoomService {
    */
   async getTasks(uuid: string) {
     const foundRoom = await this.roomRepository.findByUuidWithTasks(uuid);
+    console.log(JSON.stringify(foundRoom));
     return foundRoom.tasks;
   }
 

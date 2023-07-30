@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -16,9 +17,11 @@ export class Task {
   id: number;
 
   @ManyToOne(() => Room, (room) => room.tasks)
+  @JoinColumn({ name: 'room_id' })
   room: Room;
 
   @OneToMany(() => SubTask, (subTask) => subTask.task)
+  @JoinColumn({ name: 'sub_task_id' })
   subTasks: SubTask[];
 
   @Column({
