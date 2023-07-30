@@ -13,6 +13,9 @@ import { Room } from '../entity/room.entity';
 import { SubTask } from '../entity/sub-task.entity';
 import { Task } from '../entity/task.entity';
 import { SubTaskComment } from '../entity/task-comment.entity';
+import { MemberRoom } from '../entity/member-room.entity';
+import { RoomModule } from './room.module';
+import { TaskModule } from './task.module';
 
 @Module({
   imports: [
@@ -40,10 +43,20 @@ import { SubTaskComment } from '../entity/task-comment.entity';
       password: 'user',
       database: 'workroom',
       logging: false,
-      entities: [Member, Token, Room, SubTask, Task, SubTaskComment],
+      entities: [
+        Member,
+        Token,
+        Room,
+        SubTask,
+        Task,
+        SubTaskComment,
+        MemberRoom,
+      ],
       synchronize: false,
     }),
     AuthModule,
+    RoomModule,
+    TaskModule,
   ],
   controllers: [],
   providers: [UtilService, JwtAccessStrategy, JwtRefreshStrategy],

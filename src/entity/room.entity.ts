@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Task } from './task.entity';
+import { MemberRoom } from './member-room.entity';
 
 @Entity('room')
 export class Room {
@@ -16,6 +17,9 @@ export class Room {
 
   @OneToMany(() => Task, (task) => task.room)
   tasks: Task[];
+
+  @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.room)
+  memberRooms: MemberRoom[];
 
   @Column({
     name: 'room_uuid',
@@ -72,12 +76,12 @@ export class Room {
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP()',
   })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP()',
   })
-  updated_at: Date;
+  updatedAt: Date;
 }

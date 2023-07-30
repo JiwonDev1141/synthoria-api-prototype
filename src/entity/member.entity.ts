@@ -11,6 +11,7 @@ import {
 import { Token } from './token.entity';
 import { Task } from './task.entity';
 import { SubTaskComment } from './task-comment.entity';
+import { MemberRoom } from './member-room.entity';
 
 @Entity('member')
 @Unique(['loginId'])
@@ -23,6 +24,9 @@ export class Member {
 
   @OneToMany(() => SubTaskComment, (subTaskComment) => subTaskComment.member)
   subTaskComments: SubTaskComment[];
+
+  @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.member)
+  memberRooms: MemberRoom[];
 
   @Column({
     name: 'login_id',

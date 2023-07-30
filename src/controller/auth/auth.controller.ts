@@ -23,18 +23,6 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/test')
-  @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
-  async test(@Req() request: Request) {
-    const user = request.user as any;
-    console.log(JSON.stringify(user));
-    return {
-      code: 0,
-      message: 'success',
-    };
-  }
-
   @Post('/sign-in')
   @ApiOperation({ summary: '로그인' })
   async signIn(@Req() request: Request, @Body() body: SignInRequestDto) {
