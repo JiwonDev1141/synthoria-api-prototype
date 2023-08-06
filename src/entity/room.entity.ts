@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   Unique,
@@ -9,17 +10,27 @@ import {
 } from 'typeorm';
 import { Task } from './task.entity';
 import { MemberRoom } from './member-room.entity';
+import { TaskSection } from './section.entity';
 
 @Entity('room')
 export class Room {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => Task, (task) => task.room)
+  @OneToMany(() => Task, (task) => task.room, {
+    cascade: true,
+  })
   tasks: Task[];
 
-  @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.room)
+  @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.room, {
+    cascade: true,
+  })
   memberRooms: MemberRoom[];
+
+  @OneToMany(() => TaskSection, (taskSection) => taskSection.room, {
+    cascade: true,
+  })
+  taskSections: TaskSection[];
 
   @Column({
     name: 'room_uuid',

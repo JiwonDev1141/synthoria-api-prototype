@@ -69,7 +69,7 @@ export class AuthService {
   async reissueToken(prevRefreshToken: string, memberId: number) {
     // todo - 저장된 토큰이 있는지 확인
 
-    const foundMember = await this.memberRepository.findMemberById(memberId);
+    const foundMember = await this.memberRepository.findById(memberId);
     if (foundMember) {
       throw new UnauthorizedException();
     }

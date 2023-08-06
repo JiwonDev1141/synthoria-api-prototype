@@ -16,6 +16,7 @@ import { SubTaskComment } from '../entity/task-comment.entity';
 import { MemberRoom } from '../entity/member-room.entity';
 import { RoomModule } from './room.module';
 import { TaskModule } from './task.module';
+import { TaskSection } from '../entity/section.entity';
 
 @Module({
   imports: [
@@ -51,8 +52,9 @@ import { TaskModule } from './task.module';
         Task,
         SubTaskComment,
         MemberRoom,
+        TaskSection,
       ],
-      synchronize: false,
+      synchronize: true,
     }),
     AuthModule,
     RoomModule,

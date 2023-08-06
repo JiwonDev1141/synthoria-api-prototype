@@ -13,11 +13,15 @@ export class MemberRoom {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Member, (member) => member.memberRooms)
+  @ManyToOne(() => Member, (member) => member.memberRooms, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'member_id' })
   member: Member;
 
-  @ManyToOne(() => Room, (room) => room.memberRooms)
+  @ManyToOne(() => Room, (room) => room.memberRooms, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'room_id' })
   room: Room;
 

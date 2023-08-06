@@ -18,6 +18,7 @@ export class Token {
   @Column({
     name: 'refresh_token',
     unique: true,
+    nullable: false,
   })
   refreshToken: string;
 

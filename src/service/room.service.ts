@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { MemberRoom } from '../entity/member-room.entity';
 import { MemberRepository } from '../repository/member.repository';
 import { MemberRoomRepository } from '../repository/member-room.repository';
+import { SectionRepository } from '../repository/section.repository';
+import { TaskSection } from '../entity/section.entity';
 
 @Injectable()
 export class RoomService {
@@ -13,6 +15,7 @@ export class RoomService {
     private readonly roomRepository: RoomRepository,
     private readonly memberRepository: MemberRepository,
     private readonly memberRoomRepository: MemberRoomRepository,
+    private readonly taskSectionRepository: SectionRepository,
   ) {}
 
   async getRooms(memberId: number) {
@@ -57,7 +60,6 @@ export class RoomService {
    */
   async getTasks(uuid: string) {
     const foundRoom = await this.roomRepository.findByUuidWithTasks(uuid);
-    console.log(JSON.stringify(foundRoom));
     return foundRoom.tasks;
   }
 
@@ -77,11 +79,37 @@ export class RoomService {
     await this.roomRepository.save(newRoom);
 
     // 룸에 사용자 참여
-    const foundMember = await this.memberRepository.findMemberById(memberId);
+    const foundMember = await this.memberRepository.findById(memberId);
     const memberRoom = new MemberRoom();
     memberRoom.room = newRoom;
     memberRoom.member = foundMember;
     await this.memberRoomRepository.save(memberRoom);
+
+    // 기본 테스크 섹션 추가
+    const todoSection = new TaskSection();
+    todoSection.room = newRoom;
+    todoSection.sectionName = 'To do';
+    todoSection.isDefault = true;
+    todoSection.createdBy = foundMember.id;
+    todoSection.updatedBy = foundMember.id;
+
+    const doingSection = new TaskSection();
+    doingSection.room = newRoom;
+    doingSection.sectionName = 'Doing';
+    doingSection.isDefault = true;
+    doingSection.createdBy = foundMember.id;
+    doingSection.updatedBy = foundMember.id;
+
+    const doneSection = new TaskSection();
+    doneSection.room = newRoom;
+    doneSection.sectionName = 'Done';
+    doneSection.isDefault = true;
+    doneSection.createdBy = foundMember.id;
+    doneSection.updatedBy = foundMember.id;
+
+    await this.taskSectionRepository.save(todoSection);
+    await this.taskSectionRepository.save(doingSection);
+    await this.taskSectionRepository.save(doneSection);
 
     return newRoom;
   }

@@ -15,7 +15,7 @@ export class MemberRepository extends Repository<Member> {
     });
   }
 
-  async findMemberById(id: number) {
+  async findById(id: number) {
     return await this.findOne({
       where: { id: id },
       relations: { token: true },

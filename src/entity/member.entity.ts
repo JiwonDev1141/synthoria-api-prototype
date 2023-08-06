@@ -9,7 +9,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Token } from './token.entity';
-import { Task } from './task.entity';
 import { SubTaskComment } from './task-comment.entity';
 import { MemberRoom } from './member-room.entity';
 
@@ -19,47 +18,65 @@ export class Member {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @OneToOne(() => Token, (token) => token.member)
+  @OneToOne(() => Token, (token) => token.member, {
+    cascade: true,
+  })
   token: Token;
 
-  @OneToMany(() => SubTaskComment, (subTaskComment) => subTaskComment.member)
+  @OneToMany(() => SubTaskComment, (subTaskComment) => subTaskComment.member, {
+    cascade: true,
+  })
   subTaskComments: SubTaskComment[];
 
-  @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.member)
+  @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.member, {
+    cascade: true,
+  })
   memberRooms: MemberRoom[];
 
   @Column({
     name: 'login_id',
+    type: 'varchar',
     length: 255,
+    nullable: false,
   })
   loginId!: string;
 
   @Column({
     name: 'password',
+    type: 'varchar',
     length: 255,
+    nullable: false,
   })
   password!: string;
 
   @Column({
     name: 'username',
+    type: 'varchar',
     length: 255,
+    nullable: false,
   })
   username!: string;
 
   @Column({
     name: 'department',
+    type: 'varchar',
     length: 255,
+    nullable: false,
   })
   department!: string;
 
   @Column({
     name: 'position',
+    type: 'varchar',
     length: 255,
+    nullable: false,
   })
   position!: string;
 
   @Column({
     name: 'authority_id',
+    type: 'integer',
+    nullable: true,
   })
   authorityId!: number;
 
