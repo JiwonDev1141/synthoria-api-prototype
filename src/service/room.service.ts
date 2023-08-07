@@ -7,7 +7,7 @@ import { MemberRoom } from '../entity/member-room.entity';
 import { MemberRepository } from '../repository/member.repository';
 import { MemberRoomRepository } from '../repository/member-room.repository';
 import { SectionRepository } from '../repository/section.repository';
-import { TaskSection } from '../entity/section.entity';
+import { Section } from '../entity/section.entity';
 
 @Injectable()
 export class RoomService {
@@ -15,7 +15,7 @@ export class RoomService {
     private readonly roomRepository: RoomRepository,
     private readonly memberRepository: MemberRepository,
     private readonly memberRoomRepository: MemberRoomRepository,
-    private readonly taskSectionRepository: SectionRepository,
+    private readonly sectionRepository: SectionRepository,
   ) {}
 
   async getRooms(memberId: number) {
@@ -86,30 +86,30 @@ export class RoomService {
     await this.memberRoomRepository.save(memberRoom);
 
     // 기본 테스크 섹션 추가
-    const todoSection = new TaskSection();
+    const todoSection = new Section();
     todoSection.room = newRoom;
     todoSection.sectionName = 'To do';
     todoSection.isDefault = true;
     todoSection.createdBy = foundMember.id;
     todoSection.updatedBy = foundMember.id;
 
-    const doingSection = new TaskSection();
+    const doingSection = new Section();
     doingSection.room = newRoom;
     doingSection.sectionName = 'Doing';
     doingSection.isDefault = true;
     doingSection.createdBy = foundMember.id;
     doingSection.updatedBy = foundMember.id;
 
-    const doneSection = new TaskSection();
+    const doneSection = new Section();
     doneSection.room = newRoom;
     doneSection.sectionName = 'Done';
     doneSection.isDefault = true;
     doneSection.createdBy = foundMember.id;
     doneSection.updatedBy = foundMember.id;
 
-    await this.taskSectionRepository.save(todoSection);
-    await this.taskSectionRepository.save(doingSection);
-    await this.taskSectionRepository.save(doneSection);
+    await this.sectionRepository.save(todoSection);
+    await this.sectionRepository.save(doingSection);
+    await this.sectionRepository.save(doneSection);
 
     return newRoom;
   }
@@ -130,8 +130,14 @@ export class RoomService {
       );
     }
 
+    console.log(JSON.stringify(foundRoom));
+
     // 관리자 또는 워크룸을 생성한 사람이 아닐 경우 수정 불가능
     // todo - 관리자 판단 여부는 코드 추가 필요
+
+    console.log('foundRoom.createdBy = ' + foundRoom.createdBy);
+    console.log('memberId = ' + memberId);
+
     if (foundRoom.createdBy !== memberId) {
       throw new HttpException(
         {

@@ -1,4 +1,10 @@
-import { IsDateString, IsNumber, IsString, MaxLength } from 'class-validator';
+import {
+  IsDateString,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTaskDto {
@@ -7,7 +13,7 @@ export class CreateTaskDto {
     description: '섹션 ID',
     default: 1,
   })
-  taskSectionId: number;
+  sectionId: number;
 
   @IsString()
   @MaxLength(255)
@@ -57,13 +63,15 @@ export class CreateTaskDto {
 }
 
 export class UpdateTaskDto {
+  @IsOptional()
   @IsNumber()
   @ApiProperty({
     description: '섹션 ID',
     default: 1,
   })
-  taskSectionId: number;
+  sectionId: number;
 
+  @IsOptional()
   @IsString()
   @MaxLength(255)
   @ApiProperty({
@@ -72,6 +80,7 @@ export class UpdateTaskDto {
   })
   taskName: string;
 
+  @IsOptional()
   @IsString()
   @MaxLength(1023)
   @ApiProperty({
@@ -80,6 +89,7 @@ export class UpdateTaskDto {
   })
   taskDescription: string;
 
+  @IsOptional()
   @IsString()
   @MaxLength(255)
   @ApiProperty({
@@ -88,6 +98,7 @@ export class UpdateTaskDto {
   })
   taskType: string;
 
+  @IsOptional()
   @IsDateString()
   @ApiProperty({
     description: '작업 시작일',
@@ -95,6 +106,7 @@ export class UpdateTaskDto {
   })
   startDate: Date;
 
+  @IsOptional()
   @IsDateString()
   @ApiProperty({
     description: '작업 종료일',

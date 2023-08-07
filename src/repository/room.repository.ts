@@ -18,7 +18,7 @@ export class RoomRepository extends Repository<Room> {
           taskType: true,
           startDate: true,
           endDate: true,
-          taskSection: {
+          section: {
             id: true,
             sectionName: true,
             isDefault: true,
@@ -30,7 +30,7 @@ export class RoomRepository extends Repository<Room> {
       },
       relations: {
         tasks: {
-          taskSection: true,
+          section: true,
         },
       },
     });
@@ -45,16 +45,18 @@ export class RoomRepository extends Repository<Room> {
         roomColor: true,
         startDate: true,
         endDate: true,
-        taskSections: {
+        sections: {
           id: true,
           sectionName: true,
         },
+        createdBy: true,
+        updatedBy: true,
       },
       where: {
         roomUuid: uuid,
       },
       relations: {
-        taskSections: true,
+        sections: true,
       },
     });
   }

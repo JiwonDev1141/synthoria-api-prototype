@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Room } from './room.entity';
 import { SubTask } from './sub-task.entity';
-import { TaskSection } from './section.entity';
+import { Section } from './section.entity';
 import { SectionRepository } from '../repository/section.repository';
 
 @Entity('task')
@@ -22,13 +22,19 @@ export class Task {
   @JoinColumn({ name: 'room_id' })
   room: Room;
 
-  @ManyToOne(() => TaskSection, (taskSection) => taskSection.task)
-  @JoinColumn({ name: 'task_section_id' })
-  taskSection: TaskSection;
+  @ManyToOne(() => Section, (section) => section.task)
+  @JoinColumn({ name: 'section_id' })
+  section: Section;
 
   @OneToMany(() => SubTask, (subTask) => subTask.task)
   @JoinColumn({ name: 'sub_task_id' })
   subTasks: SubTask[];
+
+  @Column({
+    name: 'section_id',
+    type: 'integer',
+  })
+  sectionId: number;
 
   @Column({
     name: 'task_name',

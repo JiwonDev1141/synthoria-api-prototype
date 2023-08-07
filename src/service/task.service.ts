@@ -9,7 +9,7 @@ import { RoomRepository } from '../repository/room.repository';
 export class TaskService {
   constructor(
     private readonly roomRepository: RoomRepository,
-    private readonly taskSectionRepository: SectionRepository,
+    private readonly sectionRepository: SectionRepository,
     private readonly taskRepository: TaskRepository,
   ) {}
 
@@ -20,20 +20,20 @@ export class TaskService {
   }
 
   async createTask(memberId: number, createTaskDto: CreateTaskDto) {
-    const foundTaskSection = await this.taskSectionRepository.findById(
-      createTaskDto.taskSectionId,
+    const foundSection = await this.sectionRepository.findById(
+      createTaskDto.sectionId,
     );
 
     const foundRoom = await this.roomRepository.findByUuid(
       createTaskDto.roomUuid,
     );
 
-    if (!foundTaskSection)
+    if (!foundSection)
       throw new BadRequestException('섹션을 찾을 수 없습니다.');
     if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
 
     const newTask = new Task();
-    newTask.taskSection = foundTaskSection;
+    newTask.section = foundSection;
     newTask.taskName = createTaskDto.taskName;
     newTask.taskDescription = createTaskDto.taskDescription;
     newTask.taskType = createTaskDto.taskType;
@@ -52,15 +52,15 @@ export class TaskService {
     updateTaskDto: UpdateTaskDto,
   ) {
     const foundTask = await this.taskRepository.findById(taskId);
-    const foundTaskSection = await this.taskSectionRepository.findById(
-      updateTaskDto.taskSectionId,
+    const foundSection = await this.sectionRepository.findById(
+      updateTaskDto.sectionId,
     );
 
     if (!foundTask) throw new BadRequestException('테스크를 찾을 수 없습니다.');
-    if (!foundTaskSection)
+    if (!foundSection)
       throw new BadRequestException('섹션을 찾을 수 없습니다.');
 
-    foundTask.taskSection = foundTaskSection;
+    foundTask.section = foundSection;
     foundTask.taskName = updateTaskDto.taskName ?? foundTask.taskName;
     foundTask.taskDescription =
       updateTaskDto.taskDescription ?? foundTask.taskDescription;

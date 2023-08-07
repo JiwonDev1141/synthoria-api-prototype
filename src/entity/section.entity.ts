@@ -12,19 +12,25 @@ import { Room } from './room.entity';
 import { Task } from './task.entity';
 
 @Entity('section')
-export class TaskSection {
+export class Section {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Room, (room) => room.taskSections, {
+  @ManyToOne(() => Room, (room) => room.sections, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'room_id' })
   room: Room;
 
-  @OneToMany(() => Task, (task) => task.taskSection)
+  @OneToMany(() => Task, (task) => task.section)
   @JoinColumn({ name: 'task_id' })
   task: Task[];
+
+  @Column({
+    name: 'room_id',
+    type: 'integer',
+  })
+  roomId: number;
 
   @Column({
     name: 'section_name',

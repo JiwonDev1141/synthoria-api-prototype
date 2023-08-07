@@ -16,7 +16,8 @@ import { SubTaskComment } from '../entity/task-comment.entity';
 import { MemberRoom } from '../entity/member-room.entity';
 import { RoomModule } from './room.module';
 import { TaskModule } from './task.module';
-import { TaskSection } from '../entity/section.entity';
+import { Section } from '../entity/section.entity';
+import { SectionModule } from './section.module';
 
 @Module({
   imports: [
@@ -52,13 +53,14 @@ import { TaskSection } from '../entity/section.entity';
         Task,
         SubTaskComment,
         MemberRoom,
-        TaskSection,
+        Section,
       ],
       synchronize: true,
     }),
     AuthModule,
     RoomModule,
     TaskModule,
+    SectionModule,
   ],
   controllers: [],
   providers: [UtilService, JwtAccessStrategy, JwtRefreshStrategy],

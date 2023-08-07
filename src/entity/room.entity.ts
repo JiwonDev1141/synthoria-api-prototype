@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Task } from './task.entity';
 import { MemberRoom } from './member-room.entity';
-import { TaskSection } from './section.entity';
+import { Section } from './section.entity';
 
 @Entity('room')
 export class Room {
@@ -27,10 +27,10 @@ export class Room {
   })
   memberRooms: MemberRoom[];
 
-  @OneToMany(() => TaskSection, (taskSection) => taskSection.room, {
+  @OneToMany(() => Section, (section) => section.room, {
     cascade: true,
   })
-  taskSections: TaskSection[];
+  sections: Section[];
 
   @Column({
     name: 'room_uuid',

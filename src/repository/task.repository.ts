@@ -9,7 +9,7 @@ export class TaskRepository extends Repository<Task> {
     super(Task, dataSource.createEntityManager());
   }
 
-  async findById(id: number) {
+  async findById(id: number): Promise<Task> {
     return this.findOne({
       select: {
         id: true,
@@ -18,7 +18,7 @@ export class TaskRepository extends Repository<Task> {
         taskType: true,
         startDate: true,
         endDate: true,
-        taskSection: {
+        section: {
           sectionName: true,
           isDefault: true,
         },
@@ -27,7 +27,15 @@ export class TaskRepository extends Repository<Task> {
         id: id,
       },
       relations: {
-        taskSection: true,
+        section: true,
+      },
+    });
+  }
+
+  async findBySectionId(sectionId: number): Promise<Task[]> {
+    return this.find({
+      where: {
+        sectionId: sectionId,
       },
     });
   }
