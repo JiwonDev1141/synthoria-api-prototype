@@ -1,10 +1,5 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  Controller,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Member')

@@ -1,15 +1,5 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  Body,
-  Controller,
-  Get,
-  Logger,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { TaskService } from '../../service/task.service';
 import { JwtAuthGuard } from '../../util/auth/guard/jwt-auth.guard';
 import { Request } from 'express';
@@ -57,11 +47,7 @@ export class TaskController {
   @ApiBearerAuth('JWT')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '작업 수정' })
-  async updateTask(
-    @Req() request: Request,
-    @Body() body: UpdateTaskDto,
-    @Param('taskId') taskId: number,
-  ) {
+  async updateTask(@Req() request: Request, @Body() body: UpdateTaskDto, @Param('taskId') taskId: number) {
     const user = request.user as AuthMember;
     await this.taskService.updateTask(user.memberId, taskId, body);
     return {

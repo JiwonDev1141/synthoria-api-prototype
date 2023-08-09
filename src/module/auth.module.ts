@@ -8,12 +8,6 @@ import { TokenRepository } from '../repository/token.repository';
 
 @Module({
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    UtilService,
-    JwtService,
-    MemberRepository,
-    TokenRepository,
-  ],
+  providers: [AuthService, UtilService, JwtService, MemberRepository, TokenRepository],
 })
 export class AuthModule {}

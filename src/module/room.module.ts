@@ -9,13 +9,6 @@ import { SectionRepository } from '../repository/section.repository';
 
 @Module({
   controllers: [RoomController],
-  providers: [
-    RoomService,
-    JwtService,
-    RoomRepository,
-    MemberRepository,
-    MemberRoomRepository,
-    SectionRepository,
-  ],
+  providers: [RoomService, JwtService, RoomRepository, MemberRepository, MemberRoomRepository, SectionRepository],
 })
 export class RoomModule {}

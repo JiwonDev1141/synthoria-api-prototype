@@ -112,11 +112,7 @@ export class RoomController {
   @ApiBearerAuth('JWT')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '워크룸 수정' })
-  async updateRoom(
-    @Req() request: Request,
-    @Body() body: UpdateRoomDto,
-    @Param('uuid') uuid: string,
-  ) {
+  async updateRoom(@Req() request: Request, @Body() body: UpdateRoomDto, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
     if (!uuid || uuid === '') {
       throw new BadRequestException();

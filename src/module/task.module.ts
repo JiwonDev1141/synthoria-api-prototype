@@ -8,12 +8,6 @@ import { RoomRepository } from '../repository/room.repository';
 
 @Module({
   controllers: [TaskController],
-  providers: [
-    TaskService,
-    JwtService,
-    TaskRepository,
-    SectionRepository,
-    RoomRepository,
-  ],
+  providers: [TaskService, JwtService, TaskRepository, SectionRepository, RoomRepository],
 })
 export class TaskModule {}

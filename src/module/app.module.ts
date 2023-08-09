@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UtilService } from '../service/util.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -18,6 +18,7 @@ import { RoomModule } from './room.module';
 import { TaskModule } from './task.module';
 import { Section } from '../entity/section.entity';
 import { SectionModule } from './section.module';
+import { LoggerMiddleware } from '../middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -45,16 +46,7 @@ import { SectionModule } from './section.module';
       password: 'user',
       database: 'workroom',
       logging: false,
-      entities: [
-        Member,
-        Token,
-        Room,
-        SubTask,
-        Task,
-        SubTaskComment,
-        MemberRoom,
-        Section,
-      ],
+      entities: [Member, Token, Room, SubTask, Task, SubTaskComment, MemberRoom, Section],
       synchronize: true,
     }),
     AuthModule,
@@ -65,4 +57,8 @@ import { SectionModule } from './section.module';
   controllers: [],
   providers: [UtilService, JwtAccessStrategy, JwtRefreshStrategy],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggerMiddleware).forRoutes();
+  }
+}

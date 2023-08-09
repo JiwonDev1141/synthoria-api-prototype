@@ -20,16 +20,11 @@ export class TaskService {
   }
 
   async createTask(memberId: number, createTaskDto: CreateTaskDto) {
-    const foundSection = await this.sectionRepository.findById(
-      createTaskDto.sectionId,
-    );
+    const foundSection = await this.sectionRepository.findById(createTaskDto.sectionId);
 
-    const foundRoom = await this.roomRepository.findByUuid(
-      createTaskDto.roomUuid,
-    );
+    const foundRoom = await this.roomRepository.findByUuid(createTaskDto.roomUuid);
 
-    if (!foundSection)
-      throw new BadRequestException('섹션을 찾을 수 없습니다.');
+    if (!foundSection) throw new BadRequestException('섹션을 찾을 수 없습니다.');
     if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
 
     const newTask = new Task();
@@ -46,24 +41,16 @@ export class TaskService {
     await this.taskRepository.save(newTask);
   }
 
-  async updateTask(
-    memberId: number,
-    taskId: number,
-    updateTaskDto: UpdateTaskDto,
-  ) {
+  async updateTask(memberId: number, taskId: number, updateTaskDto: UpdateTaskDto) {
     const foundTask = await this.taskRepository.findById(taskId);
-    const foundSection = await this.sectionRepository.findById(
-      updateTaskDto.sectionId,
-    );
+    const foundSection = await this.sectionRepository.findById(updateTaskDto.sectionId);
 
     if (!foundTask) throw new BadRequestException('테스크를 찾을 수 없습니다.');
-    if (!foundSection)
-      throw new BadRequestException('섹션을 찾을 수 없습니다.');
+    if (!foundSection) throw new BadRequestException('섹션을 찾을 수 없습니다.');
 
     foundTask.section = foundSection;
     foundTask.taskName = updateTaskDto.taskName ?? foundTask.taskName;
-    foundTask.taskDescription =
-      updateTaskDto.taskDescription ?? foundTask.taskDescription;
+    foundTask.taskDescription = updateTaskDto.taskDescription ?? foundTask.taskDescription;
     foundTask.taskType = updateTaskDto.taskType ?? foundTask.taskType;
     foundTask.startDate = updateTaskDto.startDate ?? foundTask.startDate;
     foundTask.endDate = updateTaskDto.endDate ?? foundTask.endDate;

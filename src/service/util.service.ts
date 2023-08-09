@@ -11,16 +11,11 @@ export class UtilService {
   private readonly iterNum: number = 103237;
   private readonly saltValue: number = 10;
 
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService) {}
 
   // 시크릿 키
-  private readonly accessSecretKey: string =
-    'QSDCk7W_ctV_BPFQqS6L2mTHkCbVRFtY722vycag6YI';
-  private readonly refreshSecretKey: string =
-    'o55zCo-eIRuOo-x60qX3MU_UUmMaM2jbuUybR0bm5Vk';
+  private readonly accessSecretKey: string = 'QSDCk7W_ctV_BPFQqS6L2mTHkCbVRFtY722vycag6YI';
+  private readonly refreshSecretKey: string = 'o55zCo-eIRuOo-x60qX3MU_UUmMaM2jbuUybR0bm5Vk';
 
   /**
    * 문자열 암호화
@@ -33,9 +28,7 @@ export class UtilService {
    * @returns 암호화된 문자열
    */
   encrypt(text: string, salt: string): string {
-    return crypto
-      .pbkdf2Sync(text, salt, this.iterNum, 32, 'sha512')
-      .toString('base64');
+    return crypto.pbkdf2Sync(text, salt, this.iterNum, 32, 'sha512').toString('base64');
   }
 
   /**

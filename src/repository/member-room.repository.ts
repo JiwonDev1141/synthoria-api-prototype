@@ -8,10 +8,7 @@ export class MemberRoomRepository extends Repository<MemberRoom> {
     super(MemberRoom, dataSource.createEntityManager());
   }
 
-  async findByMemberIdAndRoomId(
-    memberId: number,
-    roomId: number,
-  ): Promise<MemberRoom> {
+  async findByMemberIdAndRoomId(memberId: number, roomId: number): Promise<MemberRoom> {
     return await this.findOneBy({
       memberId: memberId,
       roomId: roomId,

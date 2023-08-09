@@ -19,8 +19,7 @@ export class RoomService {
   ) {}
 
   async getRooms(memberId: number) {
-    const memberRooms: MemberRoom[] =
-      await this.memberRoomRepository.findAllByMemberId(memberId);
+    const memberRooms: MemberRoom[] = await this.memberRoomRepository.findAllByMemberId(memberId);
 
     const rooms: Room[] = [];
     memberRooms.forEach((value) => {
@@ -36,11 +35,7 @@ export class RoomService {
       throw new BadRequestException();
     }
 
-    const foundMemberRoom =
-      await this.memberRoomRepository.findByMemberIdAndRoomId(
-        memberId,
-        foundRoom.id,
-      );
+    const foundMemberRoom = await this.memberRoomRepository.findByMemberIdAndRoomId(memberId, foundRoom.id);
     if (!foundMemberRoom) {
       throw new HttpException(
         {
@@ -63,10 +58,7 @@ export class RoomService {
     return foundRoom.tasks;
   }
 
-  async createRoom(
-    memberId: number,
-    createRoomDto: CreateRoomDto,
-  ): Promise<Room> {
+  async createRoom(memberId: number, createRoomDto: CreateRoomDto): Promise<Room> {
     // 룸 생성
     const newRoom = new Room();
     newRoom.roomName = createRoomDto.roomName;
@@ -114,11 +106,7 @@ export class RoomService {
     return newRoom;
   }
 
-  async updateRoom(
-    memberId: number,
-    uuid: string,
-    updateRoomDto: UpdateRoomDto,
-  ) {
+  async updateRoom(memberId: number, uuid: string, updateRoomDto: UpdateRoomDto) {
     const foundRoom = await this.roomRepository.findByUuid(uuid);
     if (!foundRoom) {
       throw new HttpException(
