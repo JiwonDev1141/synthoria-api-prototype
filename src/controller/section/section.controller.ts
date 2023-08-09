@@ -1,6 +1,6 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Delete, Get, Logger, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../util/auth/guard/jwt-auth.guard';
+import { JwtAccessAuthGuard } from '../../util/auth/guard/jwt-access-auth.guard';
 import { Request } from 'express';
 import { SectionService } from '../../service/section.service';
 import { CreateSectionDto, UpdateSectionDto } from './section.dto';
@@ -16,10 +16,10 @@ export class SectionController {
 
   @Get('/')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '섹션 리스트 조회' })
   async getSections(@Req() request: Request, @Query('roomUuid') roomUuid: string) {
-    const sections = await this.sectionService.getSection(roomUuid);
+    const sections = await this.sectionService.getSections(roomUuid);
     return {
       code: 0,
       message: 'success',
@@ -31,7 +31,7 @@ export class SectionController {
 
   @Post('/')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '섹션 추가' })
   async createSection(@Req() request: Request, @Body() body: CreateSectionDto) {
     const user = request.user as AuthMember;
@@ -44,7 +44,7 @@ export class SectionController {
 
   @Patch('/:sectionId')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '섹션 수정' })
   async updateSection(@Req() request: Request, @Param('sectionId') sectionId: number, @Body() body: UpdateSectionDto) {
     const user = request.user as AuthMember;
@@ -60,7 +60,7 @@ export class SectionController {
 
   @Delete('/:sectionId')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '섹션 삭제' })
   async deleteSection(@Req() request: Request, @Param('sectionId') sectionId: number) {
     await this.sectionService.deleteSection(sectionId);

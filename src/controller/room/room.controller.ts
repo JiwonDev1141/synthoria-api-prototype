@@ -12,7 +12,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../../util/auth/guard/jwt-auth.guard';
+import { JwtAccessAuthGuard } from '../../util/auth/guard/jwt-access-auth.guard';
 import { Request } from 'express';
 import { RoomService } from '../../service/room.service';
 import { CreateRoomDto, UpdateRoomDto } from './room.dto';
@@ -28,7 +28,7 @@ export class RoomController {
 
   @Get('/')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 리스트 조회' })
   async getRooms(@Req() request: Request) {
     const user = request.user as AuthMember;
@@ -44,7 +44,7 @@ export class RoomController {
 
   @Get('/:uuid')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 상세 조회' })
   async getRoom(@Req() request: Request, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
@@ -64,7 +64,7 @@ export class RoomController {
 
   @Get('/:uuid/tasks')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 작업 리스트 조회' })
   async getTasksInRoom(@Req() request: Request, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
@@ -83,7 +83,7 @@ export class RoomController {
 
   @Post('/')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 생성' })
   async createRoom(@Req() request: Request, @Body() body: CreateRoomDto) {
     const user = request.user as AuthMember;
@@ -99,7 +99,7 @@ export class RoomController {
 
   @Post('/:uuid/invite')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '(미구현) 워크룸에 회원 초대' })
   async inviteMember(@Req() request: Request) {
     return {
@@ -110,7 +110,7 @@ export class RoomController {
 
   @Patch('/:uuid')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 수정' })
   async updateRoom(@Req() request: Request, @Body() body: UpdateRoomDto, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
@@ -127,7 +127,7 @@ export class RoomController {
 
   @Delete('/:uuid')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 삭제' })
   async deleteRoom(@Req() request: Request, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;

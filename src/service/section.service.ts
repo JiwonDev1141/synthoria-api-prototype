@@ -15,7 +15,7 @@ export class SectionService {
     private readonly taskRepository: TaskRepository,
   ) {}
 
-  async getSection(uuid: string): Promise<Section[]> {
+  async getSections(uuid: string): Promise<Section[]> {
     const foundRoom = await this.roomRepository.findByUuid(uuid);
     if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
 

@@ -38,7 +38,7 @@ export class TaskService {
     newTask.updatedBy = memberId;
     newTask.room = foundRoom;
 
-    await this.taskRepository.save(newTask);
+    return await this.taskRepository.save(newTask);
   }
 
   async updateTask(memberId: number, taskId: number, updateTaskDto: UpdateTaskDto) {

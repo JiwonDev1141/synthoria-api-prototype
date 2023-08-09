@@ -1,7 +1,7 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Logger, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { TaskService } from '../../service/task.service';
-import { JwtAuthGuard } from '../../util/auth/guard/jwt-auth.guard';
+import { JwtAccessAuthGuard } from '../../util/auth/guard/jwt-access-auth.guard';
 import { Request } from 'express';
 import { CreateTaskDto, UpdateTaskDto } from './task.dto';
 import { AuthMember } from '../../dto/member/auth-member';
@@ -16,10 +16,9 @@ export class TaskController {
 
   @Get('/:taskId')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '작업 조회' })
   async getTask(@Req() request: Request, @Param('taskId') taskId: number) {
-    const user = request.user as AuthMember;
     const task = await this.taskService.getTask(taskId);
     return {
       code: 0,
@@ -32,20 +31,23 @@ export class TaskController {
 
   @Post('/')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '작업 생성' })
   async createTask(@Req() request: Request, @Body() body: CreateTaskDto) {
     const user = request.user as AuthMember;
-    await this.taskService.createTask(user.memberId, body);
+    const task = await this.taskService.createTask(user.memberId, body);
     return {
       code: 0,
       message: 'success',
+      data: {
+        task: task,
+      },
     };
   }
 
   @Patch('/:taskId')
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '작업 수정' })
   async updateTask(@Req() request: Request, @Body() body: UpdateTaskDto, @Param('taskId') taskId: number) {
     const user = request.user as AuthMember;

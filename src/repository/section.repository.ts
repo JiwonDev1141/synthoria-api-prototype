@@ -24,6 +24,9 @@ export class SectionRepository extends Repository<Section> {
       where: {
         roomId: roomId,
       },
+      order: {
+        id: 'asc',
+      },
     });
   }
 }
