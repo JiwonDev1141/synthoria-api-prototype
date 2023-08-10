@@ -48,6 +48,8 @@ export class RoomRepository extends Repository<Room> {
             sectionName: true,
             isDefault: true,
           },
+          createdAt: true,
+          updatedAt: true,
         },
       },
       where: {
