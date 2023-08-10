@@ -54,7 +54,7 @@ export class RoomRepository extends Repository<Room> {
         roomUuid: uuid,
       },
       order: {
-        createdBy: 'asc',
+        createdAt: 'asc',
       },
       relations: {
         tasks: {
