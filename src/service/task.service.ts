@@ -57,4 +57,10 @@ export class TaskService {
 
     await this.taskRepository.save(foundTask);
   }
+
+  async deleteTask(memberId: number, taskId: number) {
+    const foundTask = await this.taskRepository.findById(taskId);
+    if (!foundTask) throw new BadRequestException('테스크를 찾을 수 없습니다.');
+    await this.taskRepository.delete(foundTask.id);
+  }
 }

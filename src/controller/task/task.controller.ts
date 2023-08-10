@@ -1,5 +1,5 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Get, Logger, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { TaskService } from '../../service/task.service';
 import { JwtAccessAuthGuard } from '../../util/auth/guard/jwt-access-auth.guard';
 import { Request } from 'express';
@@ -52,6 +52,19 @@ export class TaskController {
   async updateTask(@Req() request: Request, @Body() body: UpdateTaskDto, @Param('taskId') taskId: number) {
     const user = request.user as AuthMember;
     await this.taskService.updateTask(user.memberId, taskId, body);
+    return {
+      code: 0,
+      message: 'success',
+    };
+  }
+
+  @Delete('/:taskId')
+  @ApiBearerAuth('JWT')
+  @UseGuards(JwtAccessAuthGuard)
+  @ApiOperation({ summary: '작업 삭제' })
+  async deleteTask(@Req() request: Request, @Param('taskId') taskId: number) {
+    const user = request.user as AuthMember;
+    await this.taskService.deleteTask(user.memberId, taskId);
     return {
       code: 0,
       message: 'success',

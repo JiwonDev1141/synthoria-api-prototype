@@ -103,7 +103,7 @@ export class RoomService {
     await this.sectionRepository.save(doingSection);
     await this.sectionRepository.save(doneSection);
 
-    return newRoom;
+    return await this.roomRepository.findById(newRoom.id);
   }
 
   async updateRoom(memberId: number, uuid: string, updateRoomDto: UpdateRoomDto) {

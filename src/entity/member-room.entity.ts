@@ -15,6 +15,7 @@ export class MemberRoom {
 
   @ManyToOne(() => Room, (room) => room.memberRooms, {
     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'room_id' })
   room: Room;

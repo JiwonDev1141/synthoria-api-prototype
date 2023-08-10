@@ -8,6 +8,31 @@ export class RoomRepository extends Repository<Room> {
     super(Room, dataSource.createEntityManager());
   }
 
+  async findById(id: number): Promise<Room> {
+    return await this.findOne({
+      select: {
+        id: true,
+        roomUuid: true,
+        roomName: true,
+        roomColor: true,
+        startDate: true,
+        endDate: true,
+        sections: {
+          id: true,
+          sectionName: true,
+        },
+        createdBy: true,
+        updatedBy: true,
+      },
+      where: {
+        id: id,
+      },
+      relations: {
+        sections: true,
+      },
+    });
+  }
+
   async findByUuidWithTasks(uuid: string): Promise<Room> {
     return await this.findOne({
       select: {
@@ -27,6 +52,9 @@ export class RoomRepository extends Repository<Room> {
       },
       where: {
         roomUuid: uuid,
+      },
+      order: {
+        createdBy: 'asc',
       },
       relations: {
         tasks: {
