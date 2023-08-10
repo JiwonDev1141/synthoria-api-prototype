@@ -37,7 +37,7 @@ export class SectionService {
     newSection.createdBy = memberId;
     newSection.updatedBy = memberId;
 
-    await this.sectionRepository.save(newSection);
+    return await this.sectionRepository.save(newSection);
   }
 
   /**

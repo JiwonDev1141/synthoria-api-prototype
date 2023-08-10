@@ -35,10 +35,13 @@ export class SectionController {
   @ApiOperation({ summary: '섹션 추가' })
   async createSection(@Req() request: Request, @Body() body: CreateSectionDto) {
     const user = request.user as AuthMember;
-    await this.sectionService.createSection(user.memberId, body);
+    const section = await this.sectionService.createSection(user.memberId, body);
     return {
       code: 0,
       message: 'success',
+      data: {
+        section: section,
+      },
     };
   }
 
