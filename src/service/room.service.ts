@@ -1,5 +1,5 @@
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
-import { CreateRoomDto, UpdateRoomDto } from '../controller/room/room.dto';
+import { CreateRoomDto, InviteMemebrDto, UpdateRoomDto } from '../controller/room/room.dto';
 import { RoomRepository } from '../repository/room.repository';
 import { Room } from '../entity/room.entity';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,6 +8,7 @@ import { MemberRepository } from '../repository/member.repository';
 import { MemberRoomRepository } from '../repository/member-room.repository';
 import { SectionRepository } from '../repository/section.repository';
 import { Section } from '../entity/section.entity';
+import { Member } from '../entity/member.entity';
 
 @Injectable()
 export class RoomService {
@@ -58,6 +59,11 @@ export class RoomService {
     return foundRoom.tasks;
   }
 
+  /**
+   * 워크룸을 생성합니다.
+   * @param memberId
+   * @param createRoomDto
+   */
   async createRoom(memberId: number, createRoomDto: CreateRoomDto): Promise<Room> {
     // 룸 생성
     const newRoom = new Room();
@@ -173,5 +179,43 @@ export class RoomService {
     }
 
     await this.roomRepository.delete(foundRoom.id);
+  }
+
+  /**
+   * 워크룸에 회원을 초대합니다.
+   * @param roomUuid 워크룸 식별자
+   * @param loginId 회원 로그인 아이디
+   */
+  async inviteMember(roomUuid: string, loginId: string) {
+    const foundMember = await this.memberRepository.findByLoginId(loginId);
+    if (!foundMember) throw new BadRequestException('회원을 찾을 수 없습니다.');
+
+    const foundRoom = await this.roomRepository.findByUuid(roomUuid);
+    if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
+
+    const foundMemberRoom = await this.memberRoomRepository.findByMemberIdAndRoomId(foundMember.id, foundRoom.id);
+    if (foundMemberRoom) throw new BadRequestException('이미 워크룸에 등록된 회원입니다.');
+
+    await this.memberRoomRepository.save({
+      room: foundRoom,
+      member: foundMember,
+    });
+  }
+
+  /**
+   * 워크룸에 등록된 회원을 조회합니다.
+   * @param roomUuid 워크룸 식별자
+   */
+  async getInvitedMembers(roomUuid: string): Promise<Member[]> {
+    const foundRoom = await this.roomRepository.findByUuid(roomUuid);
+    if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
+    const memberRooms = await this.memberRoomRepository.findAllByRoomId(foundRoom.id);
+
+    const members: Member[] = [];
+    memberRooms.map((value) => {
+      members.push(value.member);
+    });
+
+    return members;
   }
 }

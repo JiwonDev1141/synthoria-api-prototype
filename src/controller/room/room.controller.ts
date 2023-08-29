@@ -15,7 +15,7 @@ import {
 import { JwtAccessAuthGuard } from '../../util/auth/guard/jwt-access-auth.guard';
 import { Request } from 'express';
 import { RoomService } from '../../service/room.service';
-import { CreateRoomDto, UpdateRoomDto } from './room.dto';
+import { CreateRoomDto, InviteMemebrDto, UpdateRoomDto } from './room.dto';
 import { AuthMember } from '../../dto/member/auth-member';
 import { Room } from '../../entity/room.entity';
 
@@ -100,11 +100,27 @@ export class RoomController {
   @Post('/:uuid/invite')
   @ApiBearerAuth('JWT')
   @UseGuards(JwtAccessAuthGuard)
-  @ApiOperation({ summary: '(미구현) 워크룸에 회원 초대' })
-  async inviteMember(@Req() request: Request) {
+  @ApiOperation({ summary: '워크룸 회원 초대' })
+  async inviteMember(@Req() request: Request, @Param('uuid') uuid: string, @Body() body: InviteMemebrDto) {
+    await this.roomService.inviteMember(uuid, body.loginId);
     return {
       code: 0,
       message: 'success',
+    };
+  }
+
+  @Get('/:uuid/members')
+  @ApiBearerAuth('JWT')
+  @UseGuards(JwtAccessAuthGuard)
+  @ApiOperation({ summary: '워크룸 회원 목록 조회' })
+  async getMembersInRoom(@Req() request: Request, @Param('uuid') uuid: string) {
+    const members = await this.roomService.getInvitedMembers(uuid);
+    return {
+      code: 0,
+      message: 'success',
+      data: {
+        members: members,
+      },
     };
   }
 

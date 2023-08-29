@@ -81,6 +81,45 @@ export class Member {
   authorityId!: number;
 
   @Column({
+    name: 'email',
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+  })
+  email: string;
+
+  @Column({
+    type: 'date',
+    nullable: true,
+  })
+  birth: Date;
+
+  @Column({
+    name: 'phone',
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+    unique: true,
+  })
+  phone: string;
+
+  @Column({
+    name: 'timezone',
+    type: 'varchar',
+    length: 255,
+    default: 'Asia/Seoul',
+  })
+  timezone: string;
+
+  @Column({
+    name: 'login_status',
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+  })
+  loginStatus: string;
+
+  @Column({
     name: 'last_login_date',
     nullable: true,
     type: 'timestamp with time zone',

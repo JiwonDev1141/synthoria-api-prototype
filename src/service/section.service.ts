@@ -5,7 +5,6 @@ import { Section } from '../entity/section.entity';
 import { CreateSectionDto, UpdateSectionDto } from '../controller/section/section.dto';
 import { TaskRepository } from '../repository/task.repository';
 import { ExtractJwt } from 'passport-jwt';
-import fromAuthHeaderWithScheme = ExtractJwt.fromAuthHeaderWithScheme;
 
 @Injectable()
 export class SectionService {

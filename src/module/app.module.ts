@@ -19,6 +19,7 @@ import { TaskModule } from './task.module';
 import { Section } from '../entity/section.entity';
 import { SectionModule } from './section.module';
 import { LoggerMiddleware } from '../middleware/logger.middleware';
+import { MemberModule } from './member.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { LoggerMiddleware } from '../middleware/logger.middleware';
       entities: [Member, Token, Room, SubTask, Task, SubTaskComment, MemberRoom, Section],
       synchronize: true,
     }),
+    MemberModule,
     AuthModule,
     RoomModule,
     TaskModule,

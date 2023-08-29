@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MemberController } from '../controller/member/member.controller';
 import { MulterModule } from '@nestjs/platform-express';
+import { MemberService } from '../service/member.service';
+import { MemberRepository } from '../repository/member.repository';
 
 @Module({
   imports: [
@@ -10,6 +12,6 @@ import { MulterModule } from '@nestjs/platform-express';
     }),
   ],
   controllers: [MemberController],
-  providers: [JwtService],
+  providers: [JwtService, MemberService, MemberRepository],
 })
 export class MemberModule {}

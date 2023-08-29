@@ -8,7 +8,7 @@ export class MemberRepository extends Repository<Member> {
     super(Member, dataSource.createEntityManager());
   }
 
-  async findMemberByLoginId(loginId: string) {
+  async findByLoginId(loginId: string) {
     return await this.findOne({
       where: { loginId: loginId },
       relations: { token: true },

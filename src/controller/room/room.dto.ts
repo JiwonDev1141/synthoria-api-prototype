@@ -68,3 +68,13 @@ export class UpdateRoomDto {
   })
   endDate: Date;
 }
+
+export class InviteMemebrDto {
+  @IsString()
+  @MaxLength(255)
+  @ApiProperty({
+    description: '회원 아이디',
+    default: 'admin',
+  })
+  loginId: string;
+}
