@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Task } from '../entity/task.entity';
-import { dtsDtsxOrDtsDtsxMapRegex } from 'ts-loader/dist/constants';
 
 @Injectable()
 export class TaskRepository extends Repository<Task> {

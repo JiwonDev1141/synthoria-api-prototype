@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     // 비밀번호 확인
-    const isValidPassword = !this.utilSerivce.verifyPassword(foundMember.password, body.password);
+    const isValidPassword = this.utilSerivce.verifyPassword(foundMember.password, body.password);
 
     if (!isValidPassword) {
       throw new HttpException(
