@@ -20,6 +20,7 @@ import { Section } from '../entity/section.entity';
 import { SectionModule } from './section.module';
 import { LoggerMiddleware } from '../middleware/logger.middleware';
 import { MemberModule } from './member.module';
+import { SubTaskModule } from './sub-task.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { MemberModule } from './member.module';
     AuthModule,
     RoomModule,
     TaskModule,
+    SubTaskModule,
     SectionModule,
   ],
   controllers: [],

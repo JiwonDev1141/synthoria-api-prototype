@@ -15,15 +15,14 @@ export class MemberController {
   @ApiBearerAuth('JWT')
   @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 초대용 회원 조회' })
-  @ApiQuery({ name: 'email', required: false, type: String })
-  @ApiQuery({ name: 'username', required: false, type: String })
-  async getMember(@Req() request: Request, @Query('email') email?: string, @Query('username') username?: string) {
-    let members: Member[] = [];
+  @ApiQuery({ name: 'keyword', required: false, type: String })
+  async getMember(@Req() request: Request, @Query('keyword') keyword?: string) {
+    let members: Member[];
 
-    if (email) {
-      members = await this.memberService.findMemberByEmail(email);
-    } else if (username) {
-      members = await this.memberService.findMemberByUsername(username);
+    if (keyword) {
+      members = await this.memberService.findMemberByKeyword(keyword);
+    } else {
+      members = await this.memberService.findMembers();
     }
 
     return {

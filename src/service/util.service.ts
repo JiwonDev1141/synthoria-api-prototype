@@ -14,8 +14,8 @@ export class UtilService {
   constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService) {}
 
   // 시크릿 키
-  private readonly accessSecretKey: string = 'QSDCk7W_ctV_BPFQqS6L2mTHkCbVRFtY722vycag6YI';
-  private readonly refreshSecretKey: string = 'o55zCo-eIRuOo-x60qX3MU_UUmMaM2jbuUybR0bm5Vk';
+  // private readonly accessSecretKey: string = 'QSDCk7W_ctV_BPFQqS6L2mTHkCbVRFtY722vycag6YI';
+  // private readonly refreshSecretKey: string = 'o55zCo-eIRuOo-x60qX3MU_UUmMaM2jbuUybR0bm5Vk';
 
   /**
    * 문자열 암호화
