@@ -3,6 +3,7 @@ import { SignInRequestDto } from '../controller/auth/auth.dto';
 import { UtilService } from './util.service';
 import { MemberRepository } from '../repository/member.repository';
 import { TokenRepository } from '../repository/token.repository';
+import now = jest.now;
 
 @Injectable()
 export class AuthService {
@@ -48,6 +49,11 @@ export class AuthService {
 
     await this.tokenRepository.update(foundMember.token.id, {
       refreshToken: refreshToken,
+    });
+
+    // 마지막 로그인 시간 설정
+    await this.memberRepository.update(foundMember.id, {
+      lastLoginDate: new Date(),
     });
 
     return {

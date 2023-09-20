@@ -38,6 +38,7 @@ export class Member {
     type: 'varchar',
     length: 255,
     nullable: false,
+    unique: true,
   })
   loginId!: string;
 
@@ -85,6 +86,7 @@ export class Member {
     type: 'varchar',
     length: 255,
     nullable: true,
+    unique: true,
   })
   email: string;
 
@@ -93,6 +95,14 @@ export class Member {
     nullable: true,
   })
   birth: Date;
+
+  @Column({
+    name: 'country_code',
+    type: 'varchar',
+    length: 255,
+    default: '+82',
+  })
+  countryCode: string;
 
   @Column({
     name: 'phone',

@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -13,7 +14,7 @@ import { MemberRoom } from './member-room.entity';
 import { Section } from './section.entity';
 
 @Entity('room')
-export class Room {
+export class Room extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
