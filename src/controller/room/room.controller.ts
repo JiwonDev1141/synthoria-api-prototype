@@ -48,9 +48,7 @@ export class RoomController {
   @ApiOperation({ summary: '워크룸 상세 조회' })
   async getRoom(@Req() request: Request, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
-    if (!uuid || uuid === '') {
-      throw new BadRequestException();
-    }
+    if (!uuid || uuid === '') throw new BadRequestException();
 
     const room = await this.roomService.getRoom(user.memberId, uuid);
     return {
@@ -68,9 +66,8 @@ export class RoomController {
   @ApiOperation({ summary: '워크룸 작업 리스트 조회' })
   async getTasksInRoom(@Req() request: Request, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
-    if (!uuid || uuid === '') {
-      throw new BadRequestException();
-    }
+    if (!uuid || uuid === '') throw new BadRequestException();
+
     const tasks = await this.roomService.getTasks(uuid);
     return {
       code: 0,
@@ -112,9 +109,9 @@ export class RoomController {
   @Get('/:uuid/members')
   @ApiBearerAuth('JWT')
   @UseGuards(JwtAccessAuthGuard)
-  @ApiOperation({ summary: '워크룸 회원 목록 조회' })
+  @ApiOperation({ summary: '워크룸에 등록된 회원 목록 조회' })
   async getMembersInRoom(@Req() request: Request, @Param('uuid') uuid: string) {
-    const members = await this.roomService.getInvitedMembers(uuid);
+    const members = await this.roomService.getJoinedMembers(uuid);
     return {
       code: 0,
       message: 'success',
@@ -124,15 +121,28 @@ export class RoomController {
     };
   }
 
+  @Delete('/:uuid/members/:memberId')
+  @ApiBearerAuth('JWT')
+  @UseGuards(JwtAccessAuthGuard)
+  @ApiOperation({ summary: '워크룸에 등록된 회원 삭제' })
+  async deleteMemberInRoom(@Req() request: Request, @Param('uuid') uuid: string, @Param('memberId') memberId: number) {
+    const user = request.user as AuthMember;
+    if (!uuid || uuid === '') throw new BadRequestException();
+
+    await this.roomService.deleteJoinedMember(uuid, memberId);
+    return {
+      code: 0,
+      message: 'success',
+    };
+  }
+
   @Patch('/:uuid')
   @ApiBearerAuth('JWT')
   @UseGuards(JwtAccessAuthGuard)
   @ApiOperation({ summary: '워크룸 수정' })
   async updateRoom(@Req() request: Request, @Body() body: UpdateRoomDto, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
-    if (!uuid || uuid === '') {
-      throw new BadRequestException();
-    }
+    if (!uuid || uuid === '') throw new BadRequestException();
 
     await this.roomService.updateRoom(user.memberId, uuid, body);
     return {
@@ -147,10 +157,7 @@ export class RoomController {
   @ApiOperation({ summary: '워크룸 삭제' })
   async deleteRoom(@Req() request: Request, @Param('uuid') uuid: string) {
     const user = request.user as AuthMember;
-
-    if (!uuid || uuid === '') {
-      throw new BadRequestException();
-    }
+    if (!uuid || uuid === '') throw new BadRequestException();
 
     await this.roomService.deleteRoom(user.memberId, uuid);
     return {

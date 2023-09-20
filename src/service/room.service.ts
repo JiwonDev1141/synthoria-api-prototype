@@ -203,10 +203,10 @@ export class RoomService {
   }
 
   /**
-   * 워크룸에 등록된 회원을 조회합니다.
+   * 워크룸에 등록된 회원들을 조회합니다.
    * @param roomUuid 워크룸 식별자
    */
-  async getInvitedMembers(roomUuid: string): Promise<Member[]> {
+  async getJoinedMembers(roomUuid: string): Promise<Member[]> {
     const foundRoom = await this.roomRepository.findByUuid(roomUuid);
     if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
     const memberRooms = await this.memberRoomRepository.findAllByRoomId(foundRoom.id);
@@ -217,5 +217,20 @@ export class RoomService {
     });
 
     return members;
+  }
+
+  /**
+   * 워크룸에 등록된 회원을 삭제합니다.
+   * @param roomUuid 워크룸 식별자
+   * @param memberId 회원 시퀀스
+   */
+  async deleteJoinedMember(roomUuid: string, memberId: number) {
+    const foundRoom = await this.roomRepository.findByUuid(roomUuid);
+    if (!foundRoom) throw new BadRequestException('워크룸을 찾을 수 없습니다.');
+
+    const foundMemberRoom = await this.memberRoomRepository.findByMemberIdAndRoomId(memberId, foundRoom.id);
+    if (!foundMemberRoom) throw new BadRequestException('워크룸에 등록된 회원이 아닙니다.');
+
+    await this.memberRoomRepository.delete(foundMemberRoom.id);
   }
 }
