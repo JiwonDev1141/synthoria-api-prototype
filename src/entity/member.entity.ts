@@ -106,6 +106,15 @@ export class Member {
   countryCode: string;
 
   @Column({
+    name: 'profile_color',
+    type: 'varchar',
+    length: 255,
+    default: 'RED',
+    nullable: true,
+  })
+  profileColor: string;
+
+  @Column({
     name: 'phone',
     type: 'varchar',
     length: 255,

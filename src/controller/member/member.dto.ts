@@ -72,4 +72,13 @@ export class UpdateMemberDto {
     default: '01012345998',
   })
   phone: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  @ApiProperty({
+    description: '프로필 색상',
+    default: 'RED',
+  })
+  profileColor: string;
 }
