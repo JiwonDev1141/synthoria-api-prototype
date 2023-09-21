@@ -24,13 +24,13 @@ export class Token {
 
   @CreateDateColumn({
     name: 'created_at',
-    type: 'timestamp with time zone',
+    type: 'timestamp without time zone',
   })
   createdAt!: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
-    type: 'timestamp with time zone',
+    type: 'timestamp without time zone',
   })
   updatedAt!: Date;
 

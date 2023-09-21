@@ -1,10 +1,23 @@
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Param, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAccessAuthGuard } from '../../util/auth/guard/jwt-access-auth.guard';
 import { Request } from 'express';
 import { MemberService } from '../../service/member.service';
 import { Member } from '../../entity/member.entity';
+import { UpdateMemberDto } from './member.dto';
 
 @ApiTags('Member')
 @Controller('/v1/members')
@@ -30,6 +43,21 @@ export class MemberController {
       message: 'success',
       data: {
         members: members,
+      },
+    };
+  }
+
+  @Patch('/:memberId')
+  @ApiBearerAuth('JWT')
+  @UseGuards(JwtAccessAuthGuard)
+  @ApiOperation({ summary: '(개발중) 회원 정보 수정' })
+  async updateMember(@Req() request: Request, @Param('memberId') memberId: number, @Body() body: UpdateMemberDto) {
+    console.log(body);
+    return {
+      code: 0,
+      message: 'success',
+      data: {
+        member: 'member info',
       },
     };
   }

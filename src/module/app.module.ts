@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtAccessStrategy } from '../util/auth/stretegy/jwt-access.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtRefreshStrategy } from '../util/auth/stretegy/jwt-refresh.strategy';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Member } from '../entity/member.entity';
 import { Token } from '../entity/token.entity';
 import { AuthModule } from './auth.module';

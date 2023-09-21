@@ -42,14 +42,14 @@ export class MemberRoom {
 
   @CreateDateColumn({
     name: 'created_at',
-    type: 'timestamp with time zone',
+    type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP()',
   })
   createdAt!: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
-    type: 'timestamp with time zone',
+    type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP()',
   })
   updatedAt!: Date;
