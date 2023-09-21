@@ -109,7 +109,7 @@ export class Member {
     name: 'profile_color',
     type: 'varchar',
     length: 255,
-    default: 'RED',
+    default: 'red',
     nullable: true,
   })
   profileColor: string;

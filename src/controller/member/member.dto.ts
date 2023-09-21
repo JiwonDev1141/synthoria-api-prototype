@@ -78,7 +78,7 @@ export class UpdateMemberDto {
   @MaxLength(255)
   @ApiProperty({
     description: '프로필 색상',
-    default: 'RED',
+    default: 'red',
   })
   profileColor: string;
 }
