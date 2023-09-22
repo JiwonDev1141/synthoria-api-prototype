@@ -16,7 +16,7 @@ import { MemberRoom } from './member-room.entity';
 @Unique(['loginId'])
 export class Member {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @OneToOne(() => Token, (token) => token.member, {
     cascade: true,

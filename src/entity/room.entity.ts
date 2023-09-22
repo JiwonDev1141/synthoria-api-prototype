@@ -19,17 +19,17 @@ export class Room extends BaseEntity {
   id: number;
 
   @OneToMany(() => Task, (task) => task.room, {
-    cascade: true,
+    onDelete: 'CASCADE',
   })
   tasks: Task[];
 
   @OneToMany(() => MemberRoom, (memberRoom) => memberRoom.room, {
-    cascade: true,
+    onDelete: 'CASCADE',
   })
   memberRooms: MemberRoom[];
 
   @OneToMany(() => Section, (section) => section.room, {
-    cascade: true,
+    onDelete: 'CASCADE',
   })
   sections: Section[];
 
