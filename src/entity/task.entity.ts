@@ -11,22 +11,27 @@ import {
 import { Room } from './room.entity';
 import { SubTask } from './sub-task.entity';
 import { Section } from './section.entity';
-import { SectionRepository } from '../repository/section.repository';
 
 @Entity('task')
 export class Task {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Room, (room) => room.tasks)
+  @ManyToOne(() => Room, (room) => room.tasks, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'room_id' })
   room: Room;
 
-  @ManyToOne(() => Section, (section) => section.task)
+  @ManyToOne(() => Section, (section) => section.task, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'section_id' })
   section: Section;
 
-  @OneToMany(() => SubTask, (subTask) => subTask.task)
+  @OneToMany(() => SubTask, (subTask) => subTask.task, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'sub_task_id' })
   subTasks: SubTask[];
 
