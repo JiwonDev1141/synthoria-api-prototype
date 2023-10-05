@@ -21,6 +21,7 @@ import { SectionModule } from './section.module';
 import { LoggerMiddleware } from '../middleware/logger.middleware';
 import { MemberModule } from './member.module';
 import { SubTaskModule } from './sub-task.module';
+import { VideoController } from '../controller/video/video.controller';
 
 @Module({
   imports: [
@@ -58,7 +59,7 @@ import { SubTaskModule } from './sub-task.module';
     SubTaskModule,
     SectionModule,
   ],
-  controllers: [],
+  controllers: [VideoController],
   providers: [UtilService, JwtAccessStrategy, JwtRefreshStrategy],
 })
 export class AppModule implements NestModule {
