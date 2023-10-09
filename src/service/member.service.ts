@@ -18,6 +18,7 @@ export class MemberService {
         phone: true,
         timezone: true,
         email: true,
+        profileColor: true,
         loginStatus: true,
       },
     });
@@ -34,6 +35,7 @@ export class MemberService {
         phone: true,
         timezone: true,
         email: true,
+        profileColor: true,
         loginStatus: true,
       },
       where: [{ username: Like('%' + keyword + '%') }, { email: Like('%' + keyword + '%') }],
