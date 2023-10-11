@@ -16,8 +16,8 @@ async function bootstrap() {
 
   // Swagger 설정
   const config = new DocumentBuilder()
-    .setTitle('Work Room')
-    .setDescription('The Work Room API description')
+    .setTitle('Synthoria')
+    .setDescription('The Synthoria API description')
     .setVersion('23.7.19')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT_REFRESH')
